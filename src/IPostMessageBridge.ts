@@ -22,7 +22,7 @@ export interface IPostMessageBridge {
      * @param bridgeName Bridge name
      * @param message Message
      */
-    sendMessage(bridgeName:string, message:any);
+    sendMessage(bridgeName:string, message?:any);
 
     /**
      * Add listener to bridge
