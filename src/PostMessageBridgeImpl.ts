@@ -33,7 +33,7 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
     /**
      * @override
      */
-    public connect(source:Window, target:Window, targetOrigin?:string) {
+    public connect(source:Window, target:Window, targetOrigin?:string):IPostMessageBridge {
         targetOrigin = targetOrigin || "*";
 
         this.busSource = new PostMessageBusSource(source);
@@ -54,6 +54,7 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
         this.busSink.attachToZone(this.ngZone);
 
         this.logger.debug(`[$PostMessageBridgeImpl] The bridge service was successfully initiated for the target origin '${targetOrigin}'.`);
+        return this;
     }
 
     /**
@@ -73,8 +74,9 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
     /**
      * @override
      */
-    public sendMessage(bridgeName:string, message?:any) {
+    public sendMessage(bridgeName:string, message?:any):IPostMessageBridge {
         this._targets.get(bridgeName).emit(message);
+        return this;
     }
 
     /**

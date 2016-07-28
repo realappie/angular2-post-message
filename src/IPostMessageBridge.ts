@@ -7,7 +7,7 @@ export interface IPostMessageBridge {
      * @param target The second Window (Window/IFrame)
      * @param targetOrigin The target origin or "*" as the default value
      */
-    connect(source:Window, target:Window, targetOrigin?:string);
+    connect(source:Window, target:Window, targetOrigin?:string):IPostMessageBridge;
 
     /**
      * Make the bridge
@@ -22,7 +22,7 @@ export interface IPostMessageBridge {
      * @param bridgeName Bridge name
      * @param message Message
      */
-    sendMessage(bridgeName:string, message?:any);
+    sendMessage(bridgeName:string, message?:any):IPostMessageBridge;
 
     /**
      * Add listener to bridge

@@ -35,23 +35,15 @@ export class App {
 
     constructor(@Inject(PostMessageBridgeImpl) protected postMessageBridge:IPostMessageBridge) {
 
-        postMessageBridge.connect(window, window.top);
-
         postMessageBridge
+            .connect(window, window.top)
             .makeBridge('ChangeLanguage')
             .makeBridge('Logout')
-            .addListener('ChangeLanguage', (message:any) => {
-                console.log('ChangeLanguage..., message:', message);
-            })
-            .addListener('Logout', () => {
-                console.log('Logout...');
-            });
+            .addListener('ChangeLanguage', (message:any) => console.log('ChangeLanguage..., message:', message))
+            .addListener('Logout', () => console.log('Logout...'))
+            .sendMessage('ChangeLanguage', 'ru');
 
-        postMessageBridge.sendMessage('ChangeLanguage', 'ru');
-
-        setTimeout(() => {
-            postMessageBridge.sendMessage('Logout', null);
-        }, 2000);
+        setTimeout(() => postMessageBridge.sendMessage('Logout', null), 2000);
     }
 }
 ```
