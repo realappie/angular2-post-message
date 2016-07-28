@@ -1,0 +1,87 @@
+import {
+    Inject,
+    Injectable,
+    NgZone,
+    EventEmitter,
+    Type
+} from '@angular/core';
+
+import {
+    PostMessageBusSource,
+    PostMessageBusSink
+} from '@angular/platform-browser/src/web_workers/shared/post_message_bus';
+
+import {LoggerFactory, ILogger} from 'angular2-smart-logger';
+
+import {IPostMessageBridge} from './IPostMessageBridge';
+import {IPostMessage} from './IPostMessage';
+
+@Injectable()
+export class PostMessageBridgeImpl implements IPostMessageBridge {
+
+    private logger:ILogger = LoggerFactory.makeLogger(PostMessageBridgeImpl);
+
+    private busSource:PostMessageBusSource;
+    private busSink:PostMessageBusSink;
+
+    private _sources:Map<string, EventEmitter<any>> = new Map<string, EventEmitter<any>>();
+    private _targets:Map<string, EventEmitter<any>> = new Map<string, EventEmitter<any>>();
+
+    constructor(@Inject(NgZone) private ngZone:NgZone) {
+    }
+
+    /**
+     * @override
+     */
+    public connect(source:Window, target:Window, targetOrigin?:string) {
+        targetOrigin = targetOrigin || "*";
+
+        this.busSource = new PostMessageBusSource(source);
+        this.busSource.attachToZone(this.ngZone);
+
+        this.busSink = new PostMessageBusSink({
+
+            postMessage: (messages:IPostMessage[]):void => {
+                if (source !== target) {
+                    target.postMessage(messages, targetOrigin);
+
+                    this.logger.debug(`[$PostMessageBridgeImpl] The messages`, messages, `were sent from the source`, source, `to the target`, target);
+                } else {
+                    this.logger.warn(`[$PostMessageBridgeImpl] It's impossible to send the messages `, messages, ` because the source and the target are equal! The source is`, source);
+                }
+            }
+        });
+        this.busSink.attachToZone(this.ngZone);
+
+        this.logger.debug(`[$PostMessageBridgeImpl] The bridge service was successfully initiated for the target origin '${targetOrigin}'.`);
+    }
+
+    /**
+     * @override
+     */
+    public makeBridge(bridgeName:string):IPostMessageBridge {
+        this.busSource.initChannel(bridgeName, true);
+        this._sources.set(bridgeName, this.busSource.from(bridgeName));
+
+        this.busSink.initChannel(bridgeName);
+        this._targets.set(bridgeName, this.busSink.to(bridgeName));
+
+        this.logger.debug(`[$PostMessageBridgeImpl] The bridge '${bridgeName}' was successfully registered.`);
+        return this;
+    }
+
+    /**
+     * @override
+     */
+    public sendMessage(bridgeName:string, message:any) {
+        this._targets.get(bridgeName).emit(message);
+    }
+
+    /**
+     * @override
+     */
+    public addListener(bridgeName:string, listener:Type):IPostMessageBridge {
+        this._sources.get(bridgeName).subscribe(listener);
+        return this;
+    }
+}
