@@ -15,6 +15,7 @@ import {LoggerFactory, ILogger} from 'angular2-smart-logger';
 
 import {IPostMessageBridge} from './IPostMessageBridge';
 import {IPostMessage} from './IPostMessage';
+import {IPostMessageEventTarget} from './IPostMessageEventTarget';
 
 @Injectable()
 export class PostMessageBridgeImpl implements IPostMessageBridge {
@@ -33,7 +34,7 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
     /**
      * @override
      */
-    public connect(source:Window, target:Window, targetOrigin?:string):IPostMessageBridge {
+    public connect(source:IPostMessageEventTarget, target:IPostMessageEventTarget, targetOrigin?:string):IPostMessageBridge {
         targetOrigin = targetOrigin || "*";
 
         this.busSource = new PostMessageBusSource(source);

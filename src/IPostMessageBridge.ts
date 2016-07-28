@@ -1,4 +1,5 @@
 import {Type} from '@angular/core';
+import {IPostMessageEventTarget} from './IPostMessageEventTarget';
 
 export interface IPostMessageBridge {
 
@@ -7,7 +8,7 @@ export interface IPostMessageBridge {
      * @param target The second Window (Window/IFrame)
      * @param targetOrigin The target origin or "*" as the default value
      */
-    connect(source:Window, target:Window, targetOrigin?:string):IPostMessageBridge;
+    connect(source:IPostMessageEventTarget, target:IPostMessageEventTarget, targetOrigin?:string):IPostMessageBridge;
 
     /**
      * Make the bridge
