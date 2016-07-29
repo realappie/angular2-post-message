@@ -27,35 +27,58 @@ export function main() {
 }
 ```
 
-**app.ts**
+**app.ts - Root app**
 ```typescript
-import {PostMessageBridgeImpl, IPostMessageBridge} from 'angular2-post-message';
+import {IPostMessageBridge, PostMessageBridgeImpl, IPostMessageEventTarget} from 'angular2-post-message';
 
-@Component({
-  selector: 'app',
-  ...
-})
+@Component({...})
 export class App {
 
     constructor(@Inject(PostMessageBridgeImpl) protected postMessageBridge:IPostMessageBridge) {
+        /**
+         * Root context
+         */
+        const iFrame:IPostMessageEventTarget = window.frames[0];
+        const currentWindow:IPostMessageEventTarget = window;
 
         postMessageBridge
-            .connect(window, window.top)
-            .makeBridge('ChangeLanguage')
+            .connect(currentWindow, iFrame)
             .makeBridge('Logout')
-            .addListener('ChangeLanguage', (message:any) => console.log('ChangeLanguage..., message:', message))
-            .addListener('Logout', () => console.log('Logout...'))
+            .makeBridge('ChangeLanguage')
+            .addListener('Logout', (message:any) => console.log('The iframe has sent a message to the parent: LOGOUT'))
             .sendMessage('ChangeLanguage', 'ru');
-
-        setTimeout(() => postMessageBridge.sendMessage('Logout'), 2000);
+            
+        // Or use the direct method
+        window.frames[0].postMessage([{channel: 'ChangeLanguage', message: 'de'}], '*');
     }
 }
 ```
 
-## The use of external modules
+**app.ts - IFrame app**
+```typescript
+import {IPostMessageBridge, PostMessageBridgeImpl, IPostMessageEventTarget} from 'angular2-post-message';
 
-```javascript
- window.postMessage([{data: {channel: 'Logout'}}, {data: {channel: 'ChangeLanguage', message: 'es'}}], '*');
+@Component({...})
+export class App {
+
+    constructor(@Inject(PostMessageBridgeImpl) protected postMessageBridge:IPostMessageBridge) {
+        /**
+         * IFrame context
+         */
+        const iFrame:IPostMessageEventTarget = window;
+        const parentWindow:IPostMessageEventTarget = window.top;
+
+        postMessageBridge
+            .connect(iFrame, parentWindow)
+            .makeBridge('Logout')
+            .makeBridge('ChangeLanguage')
+            .addListener('ChangeLanguage', (message:any) => console.log(`The parent has sent a message to the iframe - set a new language as: ${message}`))
+            .postMessageBridge.sendMessage('Logout');
+
+        // Or use the direct method
+        window.top.postMessage([{channel: 'Logout'}], '*');
+    }
+}
 ```
 
 ## Demo
