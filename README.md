@@ -1,7 +1,10 @@
 # angular2-post-message
 
-An implementation of the cross-origin communication via postMessage at Angular2.  
-The implementation is based on the **PostMessageBusSource, PostMessageBusSink** implementation of the **@angular/platform-browser** package.
+An implementation of the cross-origin communication via postMessage at Angular2.
+
+## Description
+
+The implementation is based on the "PostMessageBusSource, PostMessageBusSink" implementation of the "@angular/platform-browser" package.  
 
 ## Installation
 
