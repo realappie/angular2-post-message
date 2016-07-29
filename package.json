@@ -9,7 +9,7 @@
     "prepublish": "tsc"
   },
   "dependencies": {
-    "angular2-smart-logger": "^0.0.9"
+    "angular2-smart-logger": "^0.0.10"
   },
   "devDependencies": {
     "@angular/core": "2.0.0-rc.4",
