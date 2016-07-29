@@ -6,10 +6,14 @@ demo
 typings
 node_modules
 
-src
-!dist/src
-
 *.log
 *.tgz
 
-index.*
+index.ts
+
+angular2-post-message.ts
+
+IPostMessage.ts
+IPostMessageBridge.ts
+IPostMessageEventTarget.ts
+PostMessageBridgeImpl.ts
