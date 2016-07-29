@@ -65,7 +65,7 @@ export class App {
 ## Publish
 
 ```sh
-npm install & npm publish ./
+npm install & tsc & npm publish ./
 ```
 
 ## License
