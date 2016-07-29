@@ -1,6 +1,7 @@
 # angular2-post-message
 
-An implementation of the cross-origin communication via postMessage at Angular2.
+An implementation of the cross-origin communication via postMessage at Angular2.  
+The implementation is based on the **PostMessageBusSource, PostMessageBusSink** implementation of the **@angular/platform-browser** package.
 
 ## Installation
 
@@ -48,9 +49,14 @@ export class App {
 }
 ```
 
+## The use of external modules
+
+```javascript
+ window.postMessage([{data: {channel: 'Logout'}}, {data: {channel: 'ChangeLanguage', message: 'es'}}], '*');
+```
+
 ## Demo
 
-**Preview**
 ![Preview](demo/preview.png)
 
 ## License
