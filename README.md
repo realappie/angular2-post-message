@@ -44,7 +44,7 @@ export class App {
             .addListener('Logout', () => console.log('Logout...'))
             .sendMessage('ChangeLanguage', 'ru');
 
-        setTimeout(() => postMessageBridge.sendMessage('Logout', null), 2000);
+        setTimeout(() => postMessageBridge.sendMessage('Logout'), 2000);
     }
 }
 ```
