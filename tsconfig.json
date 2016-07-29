@@ -6,18 +6,13 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "declaration": true
+    "declaration": true,
+    "rootDir": "src",
+    "outDir": "."
   },
   "compileOnSave": false,
   "buildOnSave": false,
   "exclude": [
-    "node_modules",
-    "typings/main.d.ts",
-    "typings/main"
-  ],
-  "filesGlob": [
-    "./src/**/*.ts",
-    "!./node_modules/**/*.ts",
-    "typings/browser.d.ts"
+    "node_modules"
   ]
 }

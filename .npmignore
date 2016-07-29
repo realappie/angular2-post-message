@@ -9,11 +9,5 @@ node_modules
 *.log
 *.tgz
 
-index.ts
-
-angular2-post-message.ts
-
-IPostMessage.ts
-IPostMessageBridge.ts
-IPostMessageEventTarget.ts
-PostMessageBridgeImpl.ts
+src/*.js
+src/*.js.map
