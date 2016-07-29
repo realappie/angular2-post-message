@@ -73,7 +73,7 @@ export class App {
             .makeBridge('Logout')
             .makeBridge('ChangeLanguage')
             .addListener('ChangeLanguage', (message:any) => console.log(`The parent has sent a message to the iframe - set a new language as: ${message}`))
-            .postMessageBridge.sendMessage('Logout');
+            .sendMessage('Logout');
 
         // Or use the direct method
         window.top.postMessage([{channel: 'Logout'}], '*');
