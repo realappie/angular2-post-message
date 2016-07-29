@@ -4,7 +4,7 @@ An implementation of the cross-origin communication via postMessage at Angular2.
 
 ## Description
 
-The implementation is based on the "PostMessageBusSource, PostMessageBusSink" implementation of the "@angular/platform-browser" package.  
+The implementation is based on the PostMessageBusSource & PostMessageBusSink implementation of the @angular/platform-browser package.
 
 ## Installation
 
@@ -61,6 +61,12 @@ export class App {
 ## Demo
 
 ![Preview](demo/preview.png)
+
+## Publish
+
+```sh
+npm install & npm publish ./
+```
 
 ## License
 
