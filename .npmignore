@@ -1,4 +1,15 @@
-typings
 .idea
 .git
-PostMessageBridgeImpl.ts
+.npmignore
+
+demo
+typings
+node_modules
+
+src
+!dist/src
+
+*.log
+*.tgz
+
+index.*
