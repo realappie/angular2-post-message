@@ -5,7 +5,8 @@
   "scripts": {
     "clean": "npm cache clean",
     "typings-install": "typings install",
-    "postinstall": "npm run typings-install"
+    "postinstall": "npm run typings-install",
+    "deploy": "npm install && tsc && npm publish ./"
   },
   "dependencies": {
     "angular2-smart-logger": "latest"

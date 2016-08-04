@@ -4,7 +4,8 @@ An implementation of the cross-origin communication via postMessage at Angular2.
 
 ## Description
 
-The implementation is based on the PostMessageBusSource & PostMessageBusSink implementation of the @angular/platform-browser package.
+The implementation is based on the PostMessageBusSource & PostMessageBusSink implementation of the @angular/platform-browser package.  
+At the current implementation of the wrapper, a **bridge** term is **equivalent** the Angular2 **channel**.  
 
 ## Installation
 
@@ -41,14 +42,17 @@ export class App {
         const iFrame:IPostMessageEventTarget = window.frames[0];
         const currentWindow:IPostMessageEventTarget = window;
 
+        // The main usage scenario
         postMessageBridge
+            .setEnableLogging(false)            // By default, the smart logger is enabled
             .connect(currentWindow, iFrame)
             .makeBridge('Logout')
             .makeBridge('ChangeLanguage')
             .addListener('Logout', (message:any) => console.log('The iframe has sent a message to the parent: LOGOUT'))
             .sendMessage('ChangeLanguage', 'ru');
             
-        // Or use the direct method
+        // The additional usage scenario
+        // You can also use the direct native mechanism of sending the message (if the external application does not use Angular2)
         window.frames[0].postMessage([{channel: 'ChangeLanguage', message: 'de'}], '*');
     }
 }
@@ -68,14 +72,17 @@ export class App {
         const iFrame:IPostMessageEventTarget = window;
         const parentWindow:IPostMessageEventTarget = window.top;
 
+        // The main usage scenario
         postMessageBridge
+            .setEnableLogging(false)            // By default, the smart logger is enabled
             .connect(iFrame, parentWindow)
             .makeBridge('Logout')
             .makeBridge('ChangeLanguage')
             .addListener('ChangeLanguage', (message:any) => console.log(`The parent has sent a message to the iframe - set a new language as: ${message}`))
             .sendMessage('Logout');
 
-        // Or use the direct method
+        // The additional usage scenario
+        // You can also use the direct native mechanism of sending the message (if the external application does not use Angular2)
         window.top.postMessage([{channel: 'Logout'}], '*');
     }
 }
@@ -88,7 +95,7 @@ export class App {
 ## Publish
 
 ```sh
-npm install & tsc & npm publish ./
+npm deploy
 ```
 
 ## License

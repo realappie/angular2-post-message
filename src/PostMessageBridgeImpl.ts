@@ -20,13 +20,15 @@ import {IPostMessageEventTarget} from './IPostMessageEventTarget';
 @Injectable()
 export class PostMessageBridgeImpl implements IPostMessageBridge {
 
-    private logger:ILogger = LoggerFactory.makeLogger(PostMessageBridgeImpl);
+    private static logger:ILogger = LoggerFactory.makeLogger(PostMessageBridgeImpl);
 
     private busSource:PostMessageBusSource;
     private busSink:PostMessageBusSink;
 
     private _sources:Map<string, EventEmitter<any>> = new Map<string, EventEmitter<any>>();
     private _targets:Map<string, EventEmitter<any>> = new Map<string, EventEmitter<any>>();
+
+    private loggingEnable:boolean = true;
 
     constructor(@Inject(NgZone) private ngZone:NgZone) {
     }
@@ -46,15 +48,15 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
                 if (source !== target) {
                     target.postMessage(messages, targetOrigin);
 
-                    this.logger.debug(`[$PostMessageBridgeImpl] The messages`, messages, `were sent from the source`, source, `to the target`, target);
+                    PostMessageBridgeImpl.logger.debug(`[$PostMessageBridgeImpl] The messages`, messages, `were sent from the source`, source, `to the target`, target);
                 } else {
-                    this.logger.warn(`[$PostMessageBridgeImpl] It's impossible to send the messages `, messages, ` because the source and the target are equal! The source is`, source);
+                    PostMessageBridgeImpl.logger.warn(`[$PostMessageBridgeImpl] It's impossible to send the messages `, messages, ` because the source and the target are equal! The source is`, source);
                 }
             }
         });
         this.busSink.attachToZone(this.ngZone);
 
-        this.logger.debug(`[$PostMessageBridgeImpl] The bridge service was successfully initiated for the target origin '${targetOrigin}'.`);
+        PostMessageBridgeImpl.logger.debug(`[$PostMessageBridgeImpl] The bridge service was successfully initiated for the target origin '${targetOrigin}'.`);
         return this;
     }
 
@@ -68,7 +70,7 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
         this.busSink.initChannel(bridgeName);
         this._targets.set(bridgeName, this.busSink.to(bridgeName));
 
-        this.logger.debug(`[$PostMessageBridgeImpl] The bridge '${bridgeName}' was successfully registered.`);
+        PostMessageBridgeImpl.logger.debug(`[$PostMessageBridgeImpl] The bridge '${bridgeName}' was successfully registered.`);
         return this;
     }
 
@@ -85,6 +87,14 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
      */
     public addListener(bridgeName:string, listener:Type):IPostMessageBridge {
         this._sources.get(bridgeName).subscribe(listener);
+        return this;
+    }
+
+    /**
+     * @override
+     */
+    public setEnableLogging(enabled:boolean):IPostMessageBridge {
+        this.loggingEnable = enabled;
         return this;
     }
 }
