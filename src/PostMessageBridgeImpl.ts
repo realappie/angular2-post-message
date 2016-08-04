@@ -48,15 +48,21 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
                 if (source !== target) {
                     target.postMessage(messages, targetOrigin);
 
-                    PostMessageBridgeImpl.logger.debug(`[$PostMessageBridgeImpl] The messages`, messages, `were sent from the source`, source, `to the target`, target);
+                    if (this.loggingEnable) {
+                        PostMessageBridgeImpl.logger.debug(`[$PostMessageBridgeImpl] The messages`, messages, `were sent from the source`, source, `to the target`, target);
+                    }
                 } else {
-                    PostMessageBridgeImpl.logger.warn(`[$PostMessageBridgeImpl] It's impossible to send the messages `, messages, ` because the source and the target are equal! The source is`, source);
+                    if (this.loggingEnable) {
+                        PostMessageBridgeImpl.logger.warn(`[$PostMessageBridgeImpl] It's impossible to send the messages `, messages, ` because the source and the target are equal! The source is`, source);
+                    }
                 }
             }
         });
         this.busSink.attachToZone(this.ngZone);
 
-        PostMessageBridgeImpl.logger.debug(`[$PostMessageBridgeImpl] The bridge service was successfully initiated for the target origin '${targetOrigin}'.`);
+        if (this.loggingEnable) {
+            PostMessageBridgeImpl.logger.debug(`[$PostMessageBridgeImpl] The bridge service was successfully initiated for the target origin '${targetOrigin}'.`);
+        }
         return this;
     }
 
@@ -70,7 +76,9 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
         this.busSink.initChannel(bridgeName);
         this._targets.set(bridgeName, this.busSink.to(bridgeName));
 
-        PostMessageBridgeImpl.logger.debug(`[$PostMessageBridgeImpl] The bridge '${bridgeName}' was successfully registered.`);
+        if (this.loggingEnable) {
+            PostMessageBridgeImpl.logger.debug(`[$PostMessageBridgeImpl] The bridge '${bridgeName}' was successfully registered.`);
+        }
         return this;
     }
 
