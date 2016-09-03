@@ -1,6 +1,6 @@
 # angular2-post-message
 
-An implementation of the cross-origin communication via postMessage at Angular2.
+An implementation of the cross-origin communication via postMessage at Angular2 (RC6 compatible).
 
 ## Description
 
@@ -18,73 +18,73 @@ npm install angular2-post-message --save
 
 **main.ts**
 ```typescript
-import {PostMessageBridgeImpl} from 'angular2-post-message';
+import {PostMessageModule} from 'angular2-post-message';
 
-export function main() {
-    return bootstrap(App, [
-        PostMessageBridgeImpl,
+@NgModule({
+    bootstrap: [ApplicationComponent],
+    imports: [
+        PostMessageModule,
         ...
-    ]);
+    ],
+    ...
+})
+export class ApplicationModule {
 }
 ```
 
-**app.ts - Root app**
+**AppRootPostMessageModule.ts - Root application module**
 ```typescript
-import {IPostMessageBridge, PostMessageBridgeImpl, IPostMessageEventTarget} from 'angular2-post-message';
+@NgModule()
+export class AppRootPostMessageModule {
 
-@Component({...})
-export class App {
+	constructor(@Inject(PostMessageBridgeImpl) private postMessageBridge: IPostMessageBridge) {
+		/**
+		 * Root context
+		 */
+		const iFrame: IPostMessageEventTarget = window.frames[0];
+		const currentWindow: IPostMessageEventTarget = window;
 
-    constructor(@Inject(PostMessageBridgeImpl) protected postMessageBridge:IPostMessageBridge) {
-        /**
-         * Root context
-         */
-        const iFrame:IPostMessageEventTarget = window.frames[0];
-        const currentWindow:IPostMessageEventTarget = window;
+		// The main usage scenario
+		postMessageBridge
+			.setEnableLogging(false)            // By default, the smart logger is enabled
+			.connect(currentWindow, iFrame)
+			.makeBridge('Logout')
+			.makeBridge('ChangeLanguage')
+			.addListener('Logout', (message: any) => console.log('The iframe has sent a message to the parent: LOGOUT'))
+			.sendMessage('ChangeLanguage', 'ru');
 
-        // The main usage scenario
-        postMessageBridge
-            .setEnableLogging(false)            // By default, the smart logger is enabled
-            .connect(currentWindow, iFrame)
-            .makeBridge('Logout')
-            .makeBridge('ChangeLanguage')
-            .addListener('Logout', (message:any) => console.log('The iframe has sent a message to the parent: LOGOUT'))
-            .sendMessage('ChangeLanguage', 'ru');
-            
-        // The additional usage scenario
-        // You can also use the direct native mechanism of sending the message (if the external application does not use Angular2)
-        window.frames[0].postMessage([{channel: 'ChangeLanguage', message: 'de'}], '*');
-    }
+		// The additional usage scenario
+		// You can also use the direct native mechanism of sending the message (if the external application does not use Angular2)
+		window.frames[0].postMessage([{channel: 'ChangeLanguage', message: 'de'}], '*');
+	}
 }
 ```
 
-**app.ts - IFrame app**
+**AppFramePostMessageModule.ts - IFrame application module.**
 ```typescript
-import {IPostMessageBridge, PostMessageBridgeImpl, IPostMessageEventTarget} from 'angular2-post-message';
+@NgModule()
+export class AppFramePostMessageModule {
 
-@Component({...})
-export class App {
+	constructor(@Inject(PostMessageBridgeImpl) private postMessageBridge: IPostMessageBridge) {
+		/**
+		 * IFrame context
+		 */
+		const iFrame: IPostMessageEventTarget = window;
+		const parentWindow: IPostMessageEventTarget = window.top;
 
-    constructor(@Inject(PostMessageBridgeImpl) protected postMessageBridge:IPostMessageBridge) {
-        /**
-         * IFrame context
-         */
-        const iFrame:IPostMessageEventTarget = window;
-        const parentWindow:IPostMessageEventTarget = window.top;
+		// The main usage scenario
+		postMessageBridge
+			.setEnableLogging(false)            // By default, the smart logger is enabled
+			.connect(iFrame, parentWindow)
+			.makeBridge('Logout')
+			.makeBridge('ChangeLanguage')
+			.addListener('ChangeLanguage', (message: any) => console.log(`The parent has sent a message to the iframe - set a new language as: ${message}`))
+			.sendMessage('Logout');
 
-        // The main usage scenario
-        postMessageBridge
-            .setEnableLogging(false)            // By default, the smart logger is enabled
-            .connect(iFrame, parentWindow)
-            .makeBridge('Logout')
-            .makeBridge('ChangeLanguage')
-            .addListener('ChangeLanguage', (message:any) => console.log(`The parent has sent a message to the iframe - set a new language as: ${message}`))
-            .sendMessage('Logout');
-
-        // The additional usage scenario
-        // You can also use the direct native mechanism of sending the message (if the external application does not use Angular2)
-        window.top.postMessage([{channel: 'Logout'}], '*');
-    }
+		// The additional usage scenario
+		// You can also use the direct native mechanism of sending the message (if the external application does not use Angular2)
+		window.top.postMessage([{channel: 'Logout'}], '*');
+	}
 }
 ```
 
