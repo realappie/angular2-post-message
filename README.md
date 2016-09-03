@@ -4,7 +4,7 @@ An implementation of the cross-origin communication via postMessage at Angular2 
 
 ## Description
 
-The implementation is based on the PostMessageBusSource & PostMessageBusSink implementation of the @angular/platform-browser package.  
+The implementation is based on the PostMessageBusSource & PostMessageBusSink implementation of the @angular/platform-webworker package.
 At the current implementation of the wrapper, a **bridge** term is **equivalent** the Angular2 **channel**.  
 
 ## Installation

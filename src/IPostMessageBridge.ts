@@ -1,5 +1,3 @@
-import {Type} from '@angular/core';
-
 import {IPostMessageEventTarget} from './IPostMessageEventTarget';
 
 export interface IPostMessageBridge {
@@ -34,7 +32,7 @@ export interface IPostMessageBridge {
      * @param bridgeName Bridge name (aka Angular2 channel name)
      * @param listener Callback
      */
-    addListener(bridgeName:string, listener:Type):IPostMessageBridge;
+    addListener(bridgeName:string, listener:Function):IPostMessageBridge;
 
     /**
      * Enable or disable the smart logger (if you use the external logger).

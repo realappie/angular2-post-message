@@ -2,14 +2,13 @@ import {
     Inject,
     Injectable,
     NgZone,
-    EventEmitter,
-    Type
+    EventEmitter
 } from '@angular/core';
 
 import {
     PostMessageBusSource,
     PostMessageBusSink
-} from '@angular/platform-browser/src/web_workers/shared/post_message_bus';
+} from '@angular/platform-webworker/src/web_workers/shared/post_message_bus';
 
 import {LoggerFactory, ILogger} from 'angular2-smart-logger';
 
@@ -93,7 +92,7 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
     /**
      * @override
      */
-    public addListener(bridgeName:string, listener:Type):IPostMessageBridge {
+    public addListener(bridgeName:string, listener:Function):IPostMessageBridge {
         this._sources.get(bridgeName).subscribe(listener);
         return this;
     }
