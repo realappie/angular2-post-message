@@ -44,6 +44,9 @@
   "bugs": {
     "url": "https://github.com/apoterenko/angular2-post-message/issues"
   },
+  "module": "index.js",
+  "typings": "index.d.ts",
+  "main": "index.js",
   "engines": {
     "node": ">= 4.2.1",
     "npm": ">= 3"
