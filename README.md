@@ -1,6 +1,6 @@
 # angular2-post-message
 
-An implementation of the cross-origin communication via postMessage at Angular2 (RC6 compatible).
+An implementation of the cross-origin communication via postMessage at Angular2 (2.0.0 compatible).
 
 ## Description
 
@@ -90,7 +90,7 @@ export class AppFramePostMessageModule {
 
 ## Demo
 
-![Preview](demo/preview.png)
+![Preview](preview.png)
 
 ## Publish
 
