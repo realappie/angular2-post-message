@@ -20,6 +20,7 @@
   "compileOnSave": false,
   "buildOnSave": false,
   "exclude": [
+    "demo",
     "node_modules"
   ]
 }
