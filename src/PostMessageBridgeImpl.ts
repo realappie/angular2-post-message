@@ -10,7 +10,7 @@ import {
     PostMessageBusSink
 } from '@angular/platform-webworker/src/web_workers/shared/post_message_bus';
 
-import {LoggerFactory, ILogger} from 'ts-smart-logger';
+import {LoggerFactory, ILogger} from 'ts-smart-logger/index';
 
 import {IPostMessageBridge} from './IPostMessageBridge';
 import {IPostMessage} from './IPostMessage';
