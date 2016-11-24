@@ -1,6 +1,6 @@
 # angular2-post-message
 
-An implementation of the cross-origin communication via postMessage at Angular2 (2.0.0 compatible).
+An implementation of the cross-origin communication via postMessage at Angular2 [2.2.2 & AoT compatible].
 
 ## Description
 
@@ -11,8 +11,17 @@ At the current implementation of the wrapper, a **bridge** term is **equivalent*
 
 First you need to install the npm module:
 ```sh
+npm install ts-smart-logger --save
+
 npm install angular2-post-message --save
 ```
+
+## Demo
+
+**1** git clone --progress -v "git@github.com:apoterenko/angular2-post-message.git" "D:\sources"  
+**2** cd D:\sources\angular2-post-message\demo  
+**3** npm install  
+**4** npm start 
 
 ## Use
 
@@ -95,7 +104,7 @@ export class AppFramePostMessageModule {
 ## Publish
 
 ```sh
-npm deploy
+npm run deploy
 ```
 
 ## License
