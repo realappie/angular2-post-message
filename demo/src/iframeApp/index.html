@@ -1,0 +1,10 @@
+<body>
+    Inner application has started...
+    <script>
+        window.addEventListener("message", function (event) {
+            console.info('The inner application is listening. Event data: ', event.data);
+        }, false);
+
+        window.top.postMessage([{channel: 'Logout'}], '*');
+    </script>
+</body>

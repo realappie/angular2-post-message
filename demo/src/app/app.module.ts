@@ -6,6 +6,10 @@ import { RouterModule, PreloadAllModules } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 import { PostMessageModule } from 'angular2-post-message';
 
+// Configure the logger before loading the all internal classes
+import {LoggerFactory} from 'ts-smart-logger/index';
+LoggerFactory.configure({"logLevel": 7});
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -57,7 +61,8 @@ type StoreType = {
   ]
 })
 export class AppModule {
-  constructor(public appRef: ApplicationRef, public appState: AppState) {}
+  constructor(public appRef: ApplicationRef, public appState: AppState) {
+  }
 
   hmrOnInit(store: StoreType) {
     if (!store || !store.state) return;
