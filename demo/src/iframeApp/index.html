@@ -1,8 +1,9 @@
 <body>
-    Inner application has started...
+    Inner application has started...<br>
+    Message: <div id="placeholder"></div>
     <script>
         window.addEventListener("message", function (event) {
-            console.info('The inner application is listening. Event data: ', event.data);
+            document.getElementById('placeholder').innerHTML = JSON.stringify(event.data[0]);
         }, false);
 
         window.top.postMessage([{channel: 'Logout'}], '*');
