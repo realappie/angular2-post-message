@@ -72,7 +72,7 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
         this.busSource.initChannel(bridgeName, true);
         this._sources.set(bridgeName, this.busSource.from(bridgeName));
 
-        this.busSink.initChannel(bridgeName);
+        this.busSink.initChannel(bridgeName, true);
         this._targets.set(bridgeName, this.busSink.to(bridgeName));
 
         if (this.loggingEnable) {
