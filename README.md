@@ -46,7 +46,7 @@ export class ApplicationModule {
 @NgModule()
 export class AppRootPostMessageModule {
 
-	constructor(@Inject(PostMessageBridgeImpl) private postMessageBridge: IPostMessageBridge) {
+	constructor(@Inject(PostMessageBridgeFactory) private bridgeFactory: PostMessageBridgeFactory) {
 		/**
 		 * Root context
 		 */
@@ -54,7 +54,7 @@ export class AppRootPostMessageModule {
 		const currentWindow: IPostMessageEventTarget = window;
 
 		// The main usage scenario
-		postMessageBridge
+		bridgeFactory.makeInstance()
 			.setEnableLogging(false)            // By default, the smart logger is enabled
 			.connect(currentWindow, iFrame)
 			.makeBridge('Logout')
@@ -74,7 +74,7 @@ export class AppRootPostMessageModule {
 @NgModule()
 export class AppFramePostMessageModule {
 
-	constructor(@Inject(PostMessageBridgeImpl) private postMessageBridge: IPostMessageBridge) {
+	constructor(@Inject(PostMessageBridgeFactory) private bridgeFactory: PostMessageBridgeFactory) {
 		/**
 		 * IFrame context
 		 */
@@ -82,7 +82,7 @@ export class AppFramePostMessageModule {
 		const parentWindow: IPostMessageEventTarget = window.top;
 
 		// The main usage scenario
-		postMessageBridge
+		bridgeFactory.makeInstance()
 			.setEnableLogging(false)            // By default, the smart logger is enabled
 			.connect(iFrame, parentWindow)
 			.makeBridge('Logout')

@@ -2,7 +2,7 @@
  * Angular 2 decorators and services
  */
 import { Component, ViewEncapsulation, Inject } from '@angular/core';
-import { PostMessageBridgeImpl, IPostMessageBridge, IPostMessageEventTarget } from 'angular2-post-message';
+import { PostMessageBridgeImpl, IPostMessageBridge, IPostMessageEventTarget, PostMessageBridgeFactory } from 'angular2-post-message';
 import { AppState } from './app.service';
 
 /*
@@ -66,7 +66,7 @@ export class AppComponent {
 
   constructor(
     public appState: AppState,
-    @Inject(PostMessageBridgeImpl) private postMessageBridge: IPostMessageBridge) {
+    @Inject(PostMessageBridgeFactory) private bridgeFactory: PostMessageBridgeFactory) {
 
   }
 
@@ -80,14 +80,14 @@ export class AppComponent {
     const currentWindow: IPostMessageEventTarget = window;
 
     // The main usage scenario
-    this.postMessageBridge
+    const bridge:IPostMessageBridge = this.bridgeFactory.makeInstance()
         .connect(currentWindow, iFrame)
         .makeBridge('Logout')
         .makeBridge('ChangeLanguage')
         .addListener('Logout', (message:any) => console.info('The iframe has sent a message to the parent: LOGOUT'));
 
     setTimeout(() => {
-      this.postMessageBridge.sendMessage('ChangeLanguage', 'ru');
+      bridge.sendMessage('ChangeLanguage', 'ru');
 
       setTimeout(() => {
         // The additional usage scenario
