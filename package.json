@@ -14,42 +14,42 @@
     "ng2-post-message",
     "ng-post-message"
   ],
-  "author": "Alex Poter",
+  "author": "Alex Poter <a.poterenko@gmail.com>",
   "scripts": {
     "clean": "npm cache clean",
     "ngc-build": "node_modules/.bin/ngc -p tsconfig.json",
     "deploy": "npm install && npm run ngc-build && npm publish ./"
   },
   "peerDependencies": {
-    "@angular/compiler": "~2.2.2",
-    "@angular/core": "~2.2.2",
-    "@angular/common": "~2.2.2",
-    "@angular/platform-browser": "~2.2.2",
-    "@angular/platform-webworker": "~2.2.2",
+    "@angular/compiler": "~2.4.10",
+    "@angular/core": "~2.4.10",
+    "@angular/common": "~2.4.10",
+    "@angular/platform-browser": "~2.4.10",
+    "@angular/platform-webworker": "~2.4.10",
 
     "ts-smart-logger": "~0.0.4",
 
     "core-js": "~2.4.1",
-    "rxjs": "~5.0.0-rc.4",
-    "zone.js": "~0.6.25"
+    "rxjs": "~5.0.2",
+    "zone.js": "~0.7.6"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "~2.2.2",
-    "@angular/compiler": "~2.2.2",
-    "@angular/core": "~2.2.2",
-    "@angular/common": "~2.2.2",
-    "@angular/platform-browser": "~2.2.2",
-    "@angular/platform-webworker": "~2.2.2",
+    "@angular/compiler-cli": "~2.4.10",
+    "@angular/compiler": "~2.4.10",
+    "@angular/core": "~2.4.10",
+    "@angular/common": "~2.4.10",
+    "@angular/platform-browser": "~2.4.10",
+    "@angular/platform-webworker": "~2.4.10",
 
     "ts-smart-logger": "~0.0.4",
 
-    "typescript": "~2.0.8",
+    "typescript": "~2.2.1",
     "@types/core-js": "~0.9.34",
     "@types/node": "~6.0.46",
 
     "core-js": "~2.4.1",
-    "rxjs": "~5.0.0-rc.4",
-    "zone.js": "~0.6.25"
+    "rxjs": "~5.0.2",
+    "zone.js": "~0.7.6"
   },
   "repository": {
     "type": "git",
