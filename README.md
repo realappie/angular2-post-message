@@ -1,6 +1,6 @@
 # angular2-post-message
 
-An implementation of the cross-origin communication via postMessage at Angular2 [2.4.10 compatible].
+An implementation of the cross-origin communication via postMessage at Angular2 [4.0.0-rc.5 compatible].
 
 ## Description
 
