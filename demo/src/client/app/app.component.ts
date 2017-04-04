@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { Config } from './shared/config/env.config';
 import './operators';
 
-import { PostMessageBridgeImpl, IPostMessageBridge, IPostMessageEventTarget, PostMessageBridgeFactory } from 'angular2-post-message';
+import { IPostMessageBridge, IPostMessageEventTarget, PostMessageBridgeFactory } from 'angular2-post-message/index';
 
 /**
  * This class represents the main application component.
@@ -19,7 +19,6 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    console.log('Initial App State', this.appState.state);
 
     /**
      * Root context
@@ -41,7 +40,7 @@ export class AppComponent {
         // The additional usage scenario
         // You can also use the direct native mechanism of sending the message (if the external application does not use Angular2)
         window.frames[0].postMessage([{channel: 'ChangeLanguage', message: 'de'}], '*');
-      }, 500);
-    }, 1000);
+      }, 1000);
+    }, 2000);
   }
 }

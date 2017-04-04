@@ -1,6 +1,6 @@
 # angular2-post-message
 
-An implementation of the cross-origin communication via postMessage at Angular2 [4.0.0-rc.5 compatible].
+An implementation of the cross-origin communication via postMessage at Angular2 [4.0.1 compatible].
 
 ## Description
 
@@ -27,7 +27,7 @@ npm install angular2-post-message --save
 
 **main.ts**
 ```typescript
-import {PostMessageModule} from 'angular2-post-message';
+import {PostMessageModule} from 'angular2-post-message/index';
 
 @NgModule({
     bootstrap: [ApplicationComponent],
