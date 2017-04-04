@@ -2,6 +2,24 @@
 
 import {EventEmitter, Injectable, NgZone} from '@angular/core';
 
+export interface PostMessageTarget {
+	postMessage: (message: any, transfer?: [ArrayBuffer]) => void;
+}
+
+/**
+ * Helper class that wraps a channel's {\@link EventEmitter} and
+ * keeps track of if it should run in the zone.
+ */
+class _Channel {
+
+	/**
+	 * @param {?} emitter
+	 * @param {?} runInZone
+	 */
+	constructor(public emitter, public runInZone) {
+	}
+}
+
 /**
  * Message Bus is a low level API used to communicate between the UI and the background.
  * Communication is based on a channel abstraction. Messages published in a
