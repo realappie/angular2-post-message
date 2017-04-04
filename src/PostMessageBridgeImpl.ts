@@ -8,7 +8,7 @@ import {
 import {
     PostMessageBusSource,
     PostMessageBusSink
-} from '@angular/platform-webworker/src/web_workers/shared/post_message_bus';
+} from './PostMessageBus';
 
 import {LoggerFactory, ILogger} from 'ts-smart-logger/index';
 
