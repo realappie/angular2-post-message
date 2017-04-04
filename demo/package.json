@@ -143,7 +143,7 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "@angular/service-worker": "^1.0.0-beta.6",
-    "angular2-post-message": "1.2.1",
+    "angular2-post-message": "1.2.2",
     "ts-smart-logger": "0.0.4",
     "core-js": "^2.4.1",
     "intl": "^1.2.5",
