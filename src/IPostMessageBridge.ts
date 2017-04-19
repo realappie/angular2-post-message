@@ -35,6 +35,21 @@ export interface IPostMessageBridge {
     addListener(bridgeName:string, listener:Function):IPostMessageBridge;
 
     /**
+     * Remove a listener
+     *
+     * @param bridgeName Bridge name (aka Angular2 channel name)
+     * @param listener Callback
+     */
+    removeListener(bridgeName: string, listener: Function): IPostMessageBridge;
+
+    /**
+     * Remove the all listeners
+     *
+     * @param bridgeName Bridge name (aka Angular2 channel name)
+     */
+    removeAllListeners(bridgeName: string): IPostMessageBridge;
+
+    /**
      * Enable or disable the smart logger (if you use the external logger).
      * By default, the smart logger is enabled
      *

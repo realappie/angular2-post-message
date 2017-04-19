@@ -10,6 +10,8 @@ import {
     PostMessageBusSink
 } from './PostMessageBus';
 
+import {Subscriber} from 'rxjs';
+
 import {LoggerFactory, ILogger} from 'ts-smart-logger/index';
 
 import {IPostMessageBridge} from './IPostMessageBridge';
@@ -26,6 +28,7 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
 
     private _sources:Map<string, EventEmitter<any>> = new Map<string, EventEmitter<any>>();
     private _targets:Map<string, EventEmitter<any>> = new Map<string, EventEmitter<any>>();
+    private _subscribers:Map<string, Map<Function, Subscriber<any>>> = new Map<string, Map<Function, Subscriber<any>>>();
 
     private loggingEnable:boolean = true;
 
@@ -92,8 +95,44 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
     /**
      * @override
      */
-    public addListener(bridgeName:string, listener:Function):IPostMessageBridge {
-        this._sources.get(bridgeName).subscribe(listener);
+    public addListener(bridgeName: string, listener: Function): IPostMessageBridge {
+        const subscriber: Subscriber<any> = this._sources.get(bridgeName).subscribe(listener);
+
+        let subscribers: Map<Function, Subscriber<any>> = this._subscribers.get(bridgeName);
+        if (!subscribers) {
+            this._subscribers.set(bridgeName, subscribers = new Map<Function, Subscriber<any>>());
+        }
+
+        subscribers.set(listener, subscriber);
+        return this;
+    }
+
+    /**
+     * @override
+     */
+    public removeListener(bridgeName: string, listener: Function): IPostMessageBridge {
+        const subscribers: Map<Function, Subscriber<any>> = this._subscribers.get(bridgeName);
+
+        if (subscribers) {
+            subscribers.delete(listener);
+        } else {
+            PostMessageBridgeImpl.logger.warn(`[$PostMessageBridgeImpl] There are no existing listeners for '${bridgeName}'.`);
+        }
+        return this;
+    }
+
+    /**
+     * @override
+     */
+    public removeAllListeners(bridgeName: string): IPostMessageBridge {
+        const subscribers: Map<Function, Subscriber<any>> = this._subscribers.get(bridgeName);
+
+        if (subscribers) {
+            subscribers.forEach((subscriber: Subscriber<any>, listener: Function) => subscriber.unsubscribe());
+            this._subscribers.delete(bridgeName);
+        } else {
+            PostMessageBridgeImpl.logger.warn(`[$PostMessageBridgeImpl] There are no existing listeners for '${bridgeName}'.`);
+        }
         return this;
     }
 
