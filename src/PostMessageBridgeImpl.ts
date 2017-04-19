@@ -114,7 +114,13 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
         const subscribers: Map<Function, Subscriber<any>> = this._subscribers.get(bridgeName);
 
         if (subscribers) {
-            subscribers.delete(listener);
+            const subscriber: Subscriber<any> = subscribers.get(listener);
+            if (subscriber) {
+                subscriber.unsubscribe();
+                subscribers.delete(listener);
+            } else {
+                PostMessageBridgeImpl.logger.warn(`[$PostMessageBridgeImpl] There is no existing listener for '${bridgeName}'.`);
+            }
         } else {
             PostMessageBridgeImpl.logger.warn(`[$PostMessageBridgeImpl] There are no existing listeners for '${bridgeName}'.`);
         }
