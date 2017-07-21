@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { Config } from './shared/config/env.config';
 import './operators';
 
-import { IPostMessageBridge, IPostMessageEventTarget, PostMessageBridgeFactory } from 'angular2-post-message/index';
+import { IPostMessageBridge, IPostMessageEventTarget, PostMessageBridgeFactory } from 'ngx-post-message/index';
 
 /**
  * This class represents the main application component.
