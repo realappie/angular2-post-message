@@ -16,13 +16,6 @@ npm install ts-smart-logger --save
 npm install ngx-post-message --save
 ```
 
-## Demo
-
-**1** git clone --progress -v "git@github.com:apoterenko/ngx-post-message.git" "D:\sources"  
-**2** cd D:\sources\ngx-post-message\demo  
-**3** npm install  
-**4** npm start  
-
 ## Use
 
 **main.ts**

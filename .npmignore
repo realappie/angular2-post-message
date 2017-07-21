@@ -2,7 +2,6 @@
 .git
 .npmignore
 
-demo
 node_modules
 
 *.log
