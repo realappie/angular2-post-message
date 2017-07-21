@@ -1,6 +1,6 @@
-# angular2-post-message
+# ngx-post-message
 
-An implementation of the cross-origin communication via postMessage at Angular2 [4.0.1 compatible].
+An implementation of the cross-origin communication via postMessage at Angular2 [4.3.1 compatible].
 
 ## Description
 
@@ -13,13 +13,13 @@ First you need to install the npm module:
 ```sh
 npm install ts-smart-logger --save
 
-npm install angular2-post-message --save
+npm install ngx-post-message --save
 ```
 
 ## Demo
 
-**1** git clone --progress -v "git@github.com:apoterenko/angular2-post-message.git" "D:\sources"  
-**2** cd D:\sources\angular2-post-message\demo  
+**1** git clone --progress -v "git@github.com:apoterenko/ngx-post-message.git" "D:\sources"
+**2** cd D:\sources\ngx-post-message\demo
 **3** npm install  
 **4** npm start 
 
@@ -27,7 +27,7 @@ npm install angular2-post-message --save
 
 **main.ts**
 ```typescript
-import {PostMessageModule} from 'angular2-post-message/index';
+import {PostMessageModule} from 'ngx-post-message/index';
 
 @NgModule({
     bootstrap: [ApplicationComponent],
