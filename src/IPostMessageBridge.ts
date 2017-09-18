@@ -24,7 +24,7 @@ export interface IPostMessageBridge {
      * @param bridgeName Bridge name (aka Angular2 channel name)
      * @param message Message
      */
-    sendMessage(bridgeName:string, message?:any):IPostMessageBridge;
+    sendMessage<T>(bridgeName:string, message?:T):IPostMessageBridge;
 
     /**
      * Add listener to bridge (aka Angular2 channel)

@@ -87,7 +87,7 @@ export class PostMessageBridgeImpl implements IPostMessageBridge {
     /**
      * @override
      */
-    public sendMessage(bridgeName:string, message?:any):IPostMessageBridge {
+    public sendMessage<T>(bridgeName:string, message?:T):IPostMessageBridge {
         this._targets.get(bridgeName).emit(message);
         return this;
     }
